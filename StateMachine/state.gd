@@ -30,7 +30,7 @@ func is_active():
 	return _active
 
 func configure_input():
-	if self.get('custom_input_map'):
+	if !owner.REMOTE_CONTROLLED and self.get('custom_input_map'):
 		var action_name = self.name
 		InputMap.add_action(action_name)
 		for key in self.custom_input_map:

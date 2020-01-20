@@ -15,9 +15,13 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Project H"
+config/name="AlmocoGame"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Network="*res://Scripts/network.gd"
 
 [rendering]
 
