@@ -6,7 +6,7 @@ var _active = true setget set_active, is_active
 
 func _ready():
 	configure_input()
-	print(owner.name +' state ready: '+self.name)
+	print(owner.name +" "+get_parent().name+" ready: "+self.name)
 
 func enter(arguments: Dictionary):
 	return arguments
