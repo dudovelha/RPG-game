@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fireball.png-39cd485f69e671f95e484e18ef99c814.stex"
+path="res://.import/fireball.png-23a9efb3b7a421ced5a22de6859ffb45.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Character/States/Skills/Fireball/fireball.png"
-dest_files=[ "res://.import/fireball.png-39cd485f69e671f95e484e18ef99c814.stex" ]
+source_file="res://Skills/Fireball/fireball.png"
+dest_files=[ "res://.import/fireball.png-23a9efb3b7a421ced5a22de6859ffb45.stex" ]
 
 [params]
 

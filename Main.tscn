@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/camera.gd" type="Script" id=2]
+
+[sub_resource type="LargeTexture" id=1]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -15,6 +17,9 @@ smoothing_speed = 1.0
 script = ExtResource( 2 )
 
 [node name="World" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="World"]
+normal_map = SubResource( 1 )
 
 [node name="Map" type="Node2D" parent="World"]
 
