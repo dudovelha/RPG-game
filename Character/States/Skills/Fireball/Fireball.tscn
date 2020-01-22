@@ -1,11 +1,65 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Character/States/Skills/Fireball/fireball.gd" type="Script" id=1]
 [ext_resource path="res://Character/Assets/Character.png" type="Texture" id=2]
+[ext_resource path="res://Character/States/Skills/Fireball/fireball.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
 [sub_resource type="CircleShape2D" id=2]
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0.0148148, 0.222222 )
+colors = PoolColorArray( 1, 1, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=4]
+max_value = 5.0
+_data = [ Vector2( 0.016835, 4.799 ), 0.0, 0.0, 0, 0, Vector2( 0.995715, 0.0855002 ), -7.21834, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 4, 4, 1 )
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 25.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 10.0
+linear_accel_random = 1.0
+tangential_accel = 5.0
+damping = 50.0
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 7 )
+
+[sub_resource type="Gradient" id=8]
+colors = PoolColorArray( 1, 0.654902, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=11]
+max_value = 5.0
+_data = [ Vector2( 0, 3.1985 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.7905 ), 0.485225, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 9 )
 
 [node name="Fireball" type="Area2D"]
 collision_layer = 17
@@ -16,10 +70,13 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 0, 0, 1 )
+scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
 
 [node name="Target" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Target"]
 scale = Vector2( 2, 2 )
@@ -28,5 +85,21 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Target"]
 modulate = Color( 0.0313726, 0, 1, 0.313726 )
 texture = ExtResource( 2 )
+
+[node name="ParticlesTrail" type="Particles2D" parent="."]
+amount = 50
+lifetime = 2.0
+speed_scale = 5.0
+local_coords = false
+process_material = SubResource( 3 )
+
+[node name="ParticlesFlame" type="Particles2D" parent="."]
+position = Vector2( 0, 5 )
+lifetime = 1.5
+speed_scale = 10.0
+local_coords = false
+draw_order = 1
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
 [connection signal="body_entered" from="." to="." method="_on_Fireball_body_entered"]
 [connection signal="area_entered" from="Target" to="." method="_on_Target_area_entered"]

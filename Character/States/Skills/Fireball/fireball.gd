@@ -1,6 +1,6 @@
 extends Area2D
 
-var FIREBALL_SPEED = 800
+var FIREBALL_SPEED = 400
 
 var direction: Vector2
 var target: Vector2
