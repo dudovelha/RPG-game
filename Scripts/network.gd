@@ -7,9 +7,6 @@ const MAX_PLAYERS = 5
 var players = { }
 var self_data = { name = '', color = Color.black, position = Vector2(360, 180) }
 
-signal player_disconnected
-signal server_disconnected
-
 func _ready():
 	get_tree().connect("network_peer_disconnected", self, "_on_player_disconnected")
 	get_tree().connect("network_peer_connected", self, "_on_player_connected")
@@ -46,9 +43,7 @@ remote func _new_player_info(new_player_id, data, is_remote):
 	new_player.init(data.name, data.color, data.position, is_remote)
 	$"/root/Main/World/Players".add_child(new_player)
 	if not is_remote:
-		var camera = $"/root/Main/Camera"
-		$"/root/Main".remove_child(camera)
-		new_player.add_child(camera)
+		update_nodes(new_player)
 
 func _on_player_disconnected(id):
 	get_node("/root/Main/World/Players/"+str(id)).queue_free()
@@ -63,3 +58,8 @@ remote func _request_player_info(from_id, requested_id):
 	print("player " + str(from_id) + " requested info for player " + str(requested_id))
 	players[requested_id].position = get_node("/root/Main/World/Players/"+str(requested_id)).position
 	rpc_id(from_id, "_new_player_info", requested_id, players[requested_id], true)
+
+func update_nodes(new_player):
+	var camera = $"/root/Main/Camera"
+	$"/root/Main".remove_child(camera)
+	new_player.add_child(camera)

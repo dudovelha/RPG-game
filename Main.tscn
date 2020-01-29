@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/camera.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=3]
+[ext_resource path="res://HUD/Minimap/Minimap.tscn" type="PackedScene" id=4]
 
 [sub_resource type="LargeTexture" id=1]
 
@@ -26,6 +28,7 @@ normal_map = SubResource( 1 )
 [node name="Players" type="Node2D" parent="World"]
 
 [node name="Form" type="Node2D" parent="."]
+editor/display_folded = true
 position = Vector2( -500, -280 )
 scale = Vector2( 2, 2 )
 
@@ -67,5 +70,23 @@ margin_top = 55.0
 margin_right = 95.0
 margin_bottom = 75.0
 text = "Join"
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="Control" type="Control" parent="HUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Minimap" parent="HUD/Control" instance=ExtResource( 4 )]
+anchor_left = 1.0
+anchor_top = 1.0
+margin_left = -300.0
+margin_top = -250.0
+margin_right = 0.0
+margin_bottom = 0.0
+[connection signal="player_connected" from="." to="HUD/Control/Minimap" method="_on_player_update"]
+[connection signal="player_disconnected" from="." to="HUD/Control/Minimap" method="_on_player_update"]
 [connection signal="pressed" from="Form/Create" to="." method="_on_Create_pressed"]
 [connection signal="pressed" from="Form/Join" to="." method="_on_Join_pressed"]
