@@ -14,8 +14,8 @@ func enter(arguments: Dictionary):
 func exit():
 	return
 
-func handle_input(event):
-	return event
+func handle_input():
+	return 
 
 func update(delta):
 	return delta

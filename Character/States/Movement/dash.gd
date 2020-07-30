@@ -10,12 +10,20 @@ func ready():
 func enter(arguments):
 	if $Cooldown.is_stopped():
 		$Cooldown.start()
-		owner.SPEED_MODIFIER += SPEED_MODIFIER
-		owner.find_node("BodySprite").scale.y = 0.7
-		owner.find_node("BodySprite").position.y += 5
+		if owner.is_network_master():
+			rpc("do_dash")
 	emit_signal("finished", "previous", {})
 
 func _on_Timer_timeout():
+	if owner.is_network_master():
+		rpc("stop_dash")
+
+remotesync func do_dash():
+	owner.SPEED_MODIFIER += SPEED_MODIFIER
+	owner.find_node("BodySprite").scale.y = 0.7
+	owner.find_node("BodySprite").position.y += 5
+
+remotesync func stop_dash():
 	owner.SPEED_MODIFIER -= SPEED_MODIFIER
 	owner.find_node("BodySprite").scale.y = 1.0
 	owner.find_node("BodySprite").position.y -= 5

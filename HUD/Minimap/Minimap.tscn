@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://HUD/Minimap/minimap.gd" type="Script" id=1]
 [ext_resource path="res://HUD/Minimap/minimap.png" type="Texture" id=2]
+[ext_resource path="res://Character/Assets/Character.png" type="Texture" id=3]
 
 [node name="Minimap" type="MarginContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -1030.0
@@ -13,6 +15,9 @@ custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Frame" type="NinePatchRect" parent="."]
 margin_left = 20.0
@@ -41,3 +46,8 @@ margin_left = 7.0
 margin_top = 4.0
 margin_right = 200.0
 margin_bottom = 103.0
+
+[node name="MainObject" type="Sprite" parent="MarginContainer/Grid"]
+visible = false
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )

@@ -5,6 +5,7 @@ func _input(event):
 			_zoom(Vector2(-0.1, -0.1))
 	if Input.is_action_pressed("zoom_out"):
 			_zoom(Vector2(0.1, 0.1))
+	return event
 
 func _zoom(vec):
 	var new_zoom = zoom + vec

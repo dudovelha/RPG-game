@@ -13,10 +13,12 @@ func enter(arguments):
 	enter_velocity = arguments.get("velocity", Vector2.ZERO)
 	vertical_velocity = 300.0
 	height = 0.0
-	owner.set_collision_layer(2)
+	if owner.is_network_master():
+		rpc("set_in_air", true)
 
 func exit():
-	owner.set_collision_layer(1)
+	if owner.is_network_master():
+		rpc("set_in_air", false)
 
 func update(delta):
 	var jump_height = get_jump_height(delta)
@@ -33,6 +35,15 @@ func get_jump_height(delta):
 	
 	return -height
 
+func set_current_position(new_position):
+	if owner.is_network_master():
+		owner.current_position = new_position
+		owner.rset_unreliable("current_position", new_position)
+
+remotesync func set_in_air(is_in_air):
+	owner.set_collision_mask_bit(0, !is_in_air)
+	owner.set_collision_mask_bit(1, is_in_air)
+
 remotesync func jump(height, enter_velocity):
 	owner.get_node("Pivot").position.y = height
-	owner.position += enter_velocity
+	set_current_position(owner.position + enter_velocity)

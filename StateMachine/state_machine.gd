@@ -11,7 +11,7 @@ func _ready():
 	current_state = states_stack[0]
 	
 	for state in get_children():
-		state.connect("finished", self, "_call_change_state")
+		state.connect("finished", self, "_change_state")
 		states_map[state.name] = state
 
 func _process(delta):
@@ -20,14 +20,14 @@ func _process(delta):
 
 func _input(event):
 	if not owner.REMOTE_CONTROLLED:
-		current_state.handle_input(event)
+		current_state.handle_input()
 
 func _call_change_state(state_name: String, arguments: Dictionary):
 	var peer = get_tree().network_peer
 	if owner.is_network_master():
 		rpc("_change_state", state_name, arguments)
 
-remotesync func _change_state(state_name: String, arguments: Dictionary):
+func _change_state(state_name: String, arguments: Dictionary):
 	var is_state = is_state(state_name)
 	current_state.exit()
 	if not is_state:

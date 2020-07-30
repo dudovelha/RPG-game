@@ -10,7 +10,7 @@ func enter(arguments):
 func exit():
 	return
 
-func handle_input(event):
+func handle_input():
 	if Input.is_action_just_pressed("Jump"):
 		emit_signal("finished", "Jump", {"velocity": velocity})
 	if Input.is_action_just_pressed("Dash"):
@@ -19,7 +19,7 @@ func handle_input(event):
 func update(delta):
 	if is_network_master():
 		var vec = Vector2.ZERO
-		var new_position = owner.position
+		var new_position = owner.current_position
 		if Input.is_key_pressed(KEY_LEFT):
 			vec.x -= 1
 		if Input.is_key_pressed(KEY_RIGHT):
@@ -32,12 +32,14 @@ func update(delta):
 		if not vec == Vector2.ZERO:
 			velocity = vec * owner.get_speed() * delta
 			new_position += velocity
-			rpc("move", new_position)
+			set_current_position(new_position)
 		else:
 			emit_signal("finished", "previous", {})
 
-remotesync func move(new_position):
-	owner.set_position(new_position)
+func set_current_position(new_position):
+	if owner.is_network_master():
+		owner.rset_unreliable("current_position", new_position)
+		owner.current_position = new_position
 
 func _on_animation_finished(anim_name):
 	return
