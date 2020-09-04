@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://lightning.gd" type="Script" id=1]
+
+[node name="Lightning" type="Line2D"]
+position = Vector2( 200, 200 )
+points = PoolVector2Array( 0, 0, -5, 10, 3, 20, -6, 30, 0, 40 )
+width = 2.0
+default_color = Color( 0.423529, 0.72549, 1, 1 )
+script = ExtResource( 1 )
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="KillTimer" to="." method="_on_KillTimer_timeout"]

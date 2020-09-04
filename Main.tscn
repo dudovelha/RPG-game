@@ -1,13 +1,22 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/camera.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=3]
 [ext_resource path="res://HUD/Minimap/Minimap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HUD/Resources/Resources.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/photo-1446776811953-b23d57bd21aa.jpg" type="Texture" id=7]
 
-[sub_resource type="LargeTexture" id=1]
+[sub_resource type="OpenSimplexNoise" id=1]
+seed = 9715418
+octaves = 6
+persistence = 1.0
+
+[sub_resource type="NoiseTexture" id=2]
+width = 1920
+height = 1080
+noise = SubResource( 1 )
+
+[sub_resource type="LargeTexture" id=3]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -20,10 +29,9 @@ script = ExtResource( 2 )
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="World"]
-visible = false
-texture = ExtResource( 7 )
-normal_map = SubResource( 1 )
+[node name="Background" type="Sprite" parent="World"]
+texture = SubResource( 2 )
+normal_map = SubResource( 3 )
 
 [node name="Map" type="Node2D" parent="World"]
 
@@ -58,6 +66,9 @@ margin_left = 45.0
 margin_top = 25.0
 margin_right = 85.0
 margin_bottom = 45.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Create" type="Button" parent="Form"]
 margin_top = 55.0

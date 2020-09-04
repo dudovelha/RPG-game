@@ -18,12 +18,11 @@ func _process(delta):
 	if current_state.is_active():
 		current_state.update(delta)
 
-func _input(event):
-	if not owner.REMOTE_CONTROLLED:
+func _input(_event):
+	if owner.is_network_master():
 		current_state.handle_input()
 
-func _call_change_state(state_name: String, arguments: Dictionary):
-	var peer = get_tree().network_peer
+func _call_change_state(state_name: String, arguments: Dictionary): #not using anymore
 	if owner.is_network_master():
 		rpc("_change_state", state_name, arguments)
 

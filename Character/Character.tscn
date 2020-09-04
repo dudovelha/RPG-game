@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Character/Scripts/character.gd" type="Script" id=1]
 [ext_resource path="res://Character/Assets/Character.png" type="Texture" id=2]
@@ -11,13 +11,19 @@
 [ext_resource path="res://Skills/idle.gd" type="Script" id=9]
 [ext_resource path="res://Skills/skill_spawner.gd" type="Script" id=10]
 [ext_resource path="res://Skills/Fireball/Fireball.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Skills/ArcaneBolt/ArcaneBolt.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Skills/ChainLightning/ChainLightning.tscn" type="PackedScene" id=13]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 17.8221
-height = 18.4737
+radius = 18.0
+
+[sub_resource type="OccluderPolygon2D" id=2]
+cull_mode = 1
+polygon = PoolVector2Array( 0, -18, -14, -12, -18, 0, -12, 12, 0, 18, 12, 12, 16, 0, 12, -12 )
 
 [node name="Character" type="KinematicBody2D" groups=[
 "minimap_objects",
+"player",
 ]]
 script = ExtResource( 1 )
 
@@ -27,7 +33,6 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
@@ -64,8 +69,13 @@ script = ExtResource( 9 )
 script = ExtResource( 10 )
 Skill = ExtResource( 11 )
 
-[node name="Cooldown" type="Timer" parent="SkillStates/Fireball"]
-one_shot = true
+[node name="ArcaneBolt" type="Node" parent="SkillStates"]
+script = ExtResource( 10 )
+Skill = ExtResource( 12 )
+
+[node name="ChainLightning" type="Node" parent="SkillStates"]
+script = ExtResource( 10 )
+Skill = ExtResource( 13 )
 
 [node name="HUD" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -88,4 +98,8 @@ clip_text = true
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 2 )
+[connection signal="hit" from="." to="MovementStates/Jump" method="_on_Character_hit"]
 [connection signal="timeout" from="MovementStates/Dash/Cooldown" to="MovementStates/Dash" method="_on_Timer_timeout"]

@@ -14,7 +14,7 @@ dest_files=[ "res://.import/fireball.png-23a9efb3b7a421ced5a22de6859ffb45.stex" 
 
 [params]
 
-compress/mode=3
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

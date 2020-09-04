@@ -7,7 +7,7 @@ var SPEED_MODIFIER: = 4.0
 func ready():
 	$Cooldown.connect("timeout", self, "_on_timer_timeout")
 
-func enter(arguments):
+func enter(_arguments):
 	if $Cooldown.is_stopped():
 		$Cooldown.start()
 		if owner.is_network_master():

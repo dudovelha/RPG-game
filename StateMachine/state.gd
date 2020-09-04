@@ -1,12 +1,12 @@
 extends Node
 
-signal finished(next_state_name)
+signal finished(next_state_name, arguments)
 
 var _active = true setget set_active, is_active
 
 func _ready():
 	configure_input()
-	print(owner.name +" "+get_parent().name+" ready: "+self.name)
+	print_debug(owner.name +" "+get_parent().name+" ready: "+self.name)
 
 func enter(arguments: Dictionary):
 	return arguments
@@ -17,11 +17,8 @@ func exit():
 func handle_input():
 	return 
 
-func update(delta):
-	return delta
-
-func _on_animation_finished(anim_name):
-	return anim_name
+func update(_delta):
+	return
 
 func set_active(active):
 	_active = active
@@ -30,7 +27,7 @@ func is_active():
 	return _active
 
 func configure_input():
-	if !owner.REMOTE_CONTROLLED and self.get('custom_input_map'):
+	if owner.is_network_master() and self.get('custom_input_map'):
 		var action_name = self.name
 		InputMap.add_action(action_name)
 		for key in self.custom_input_map:

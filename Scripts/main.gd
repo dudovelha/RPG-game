@@ -4,12 +4,8 @@ signal player_connected
 signal player_disconnected
 
 func _ready():
-	var error = get_tree().connect("network_peer_disconnected", self, "_on_player_disconnected")
-	if error:
-		print("network_peer_disconnected", error)
-	error = get_tree().connect("network_peer_connected", self, "_on_player_connected")
-	if error:
-		print("network_peer_disconnected", error)
+	get_tree().connect("network_peer_disconnected", self, "_on_player_disconnected")
+	get_tree().connect("network_peer_connected", self, "_on_player_connected")
 
 func _on_Create_pressed():
 	Network.create_server($Form/Name.text, $Form/ColorPickerButton.get_pick_color())

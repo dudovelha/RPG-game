@@ -19,7 +19,7 @@ func handle_input():
 func update(delta):
 	if is_network_master():
 		var vec = Vector2.ZERO
-		var new_position = owner.current_position
+		var new_position = owner.network_position
 		if Input.is_key_pressed(KEY_LEFT):
 			vec.x -= 1
 		if Input.is_key_pressed(KEY_RIGHT):
@@ -38,8 +38,5 @@ func update(delta):
 
 func set_current_position(new_position):
 	if owner.is_network_master():
-		owner.rset_unreliable("current_position", new_position)
-		owner.current_position = new_position
-
-func _on_animation_finished(anim_name):
-	return
+		owner.rset_unreliable("network_position", new_position)
+		owner.network_position = new_position

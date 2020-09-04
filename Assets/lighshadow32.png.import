@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/light.png-424aef562c3ea4e0573d8bc0e80c5016.stex"
+path="res://.import/lighshadow32.png-c717b3ede2780adbdd6e8bf8e1b84834.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Skills/Fireball/light.png"
-dest_files=[ "res://.import/light.png-424aef562c3ea4e0573d8bc0e80c5016.stex" ]
+source_file="res://Assets/lighshadow32.png"
+dest_files=[ "res://.import/lighshadow32.png-c717b3ede2780adbdd6e8bf8e1b84834.stex" ]
 
 [params]
 

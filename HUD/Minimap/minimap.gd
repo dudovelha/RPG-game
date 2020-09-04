@@ -32,7 +32,7 @@ func _update_minimap():
 		new_marker.name = item.name
 		markers[item] = new_marker
 
-func _process(delta):
+func _process(_delta):
 	if is_visible():
 		for item in markers:
 			if is_instance_valid(item):
@@ -44,7 +44,6 @@ func _process(delta):
 				obj_pos.x = clamp(obj_pos.x, 5, grid.rect_size.x - 5)
 				obj_pos.y = clamp(obj_pos.y, 5, grid.rect_size.y - 5)
 				markers[item].position = obj_pos
-	return delta
 
 
 func clear_minimap():

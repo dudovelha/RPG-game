@@ -1,19 +1,18 @@
 extends "res://StateMachine/state.gd"
 
-const POSITION_OFFSET = Vector2(-20, -20)
+const POSITION_OFFSET = Vector2(0, -15)
 
 export(PackedScene) var Skill
 var custom_input_map: Array
 var skill_name: String
 var skill: Node
 
-func _ready():
+func _enter_tree():
 	var variables_skill = Skill.instance()
 	custom_input_map = variables_skill.CUSTOM_INPUT_MAP
 	skill_name = variables_skill.name
 	create_cooldown(variables_skill.COOLDOWN)
 	variables_skill.queue_free()
-	._ready()
 
 func create_cooldown(wait_time):
 	var timer = Timer.new()
@@ -22,7 +21,7 @@ func create_cooldown(wait_time):
 	timer.name = "Cooldown"
 	add_child(timer)
 
-func enter(arguments):
+func enter(_arguments):
 	if owner.is_network_master():
 		rpc("spawn_skill")
 
