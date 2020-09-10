@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://HUD/Minimap/minimap.gd" type="Script" id=1]
 [ext_resource path="res://HUD/Minimap/minimap.png" type="Texture" id=2]
 [ext_resource path="res://Character/Assets/Character.png" type="Texture" id=3]
 
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.294118, 0.294118, 0.294118, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
 [node name="Minimap" type="MarginContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -1030.0
@@ -48,6 +54,18 @@ margin_right = 200.0
 margin_bottom = 103.0
 
 [node name="MainObject" type="Sprite" parent="MarginContainer/Grid"]
-visible = false
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Grid"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 2 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

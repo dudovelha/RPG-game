@@ -5,7 +5,7 @@ var COOLDOWN = 1
 var DAMAGE = 1 setget ,get_damage
 var SPEED = 400 setget ,get_speed
 var EXPLOSION_RADIUS = 0.0
-var done = false
+var done: = false
 
 remotesync var network_position: Vector2
 
@@ -61,4 +61,11 @@ remotesync func hit(body: Node, delete: bool):
 	if body and body.has_method("damage"):
 		body.damage(DAMAGE, self.get_global_position())
 	if delete:
-		self.queue_free()
+		delete_skill()
+
+func delete_skill():
+	if get_tree().is_network_server():
+		rpc("remote_delete_skill")
+
+remotesync func remote_delete_skill():
+	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Character/Scripts/character.gd" type="Script" id=1]
 [ext_resource path="res://Character/Assets/Character.png" type="Texture" id=2]
@@ -7,12 +7,14 @@
 [ext_resource path="res://Character/States/Movement/move.gd" type="Script" id=5]
 [ext_resource path="res://Character/States/Movement/jump.gd" type="Script" id=6]
 [ext_resource path="res://Character/States/Movement/dash.gd" type="Script" id=7]
-[ext_resource path="res://StateMachine/state_machine.gd" type="Script" id=8]
+[ext_resource path="res://Character/Assets/Halo.png" type="Texture" id=8]
 [ext_resource path="res://Skills/idle.gd" type="Script" id=9]
 [ext_resource path="res://Skills/skill_spawner.gd" type="Script" id=10]
 [ext_resource path="res://Skills/Fireball/Fireball.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Skills/ArcaneBolt/ArcaneBolt.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Skills/ChainLightning/ChainLightning.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Character/States/Movement/fall.gd" type="Script" id=14]
+[ext_resource path="res://Character/Scripts/death.gd" type="Script" id=15]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 18.0
@@ -37,6 +39,7 @@ shape = SubResource( 1 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.215686 )
+show_behind_parent = true
 position = Vector2( 0, 15 )
 scale = Vector2( 1, 0.4 )
 texture = ExtResource( 2 )
@@ -59,8 +62,10 @@ script = ExtResource( 7 )
 wait_time = 0.2
 one_shot = true
 
-[node name="SkillStates" type="Node" parent="."]
-script = ExtResource( 8 )
+[node name="Fall" type="Node" parent="MovementStates"]
+script = ExtResource( 14 )
+
+[node name="SkillStates" parent="." instance=ExtResource( 3 )]
 
 [node name="Idle" type="Node" parent="SkillStates"]
 script = ExtResource( 9 )
@@ -101,5 +106,10 @@ __meta__ = {
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 2 )
+
+[node name="Death" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 8 )
+script = ExtResource( 15 )
 [connection signal="hit" from="." to="MovementStates/Jump" method="_on_Character_hit"]
 [connection signal="timeout" from="MovementStates/Dash/Cooldown" to="MovementStates/Dash" method="_on_Timer_timeout"]

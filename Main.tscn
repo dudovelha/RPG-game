@@ -1,22 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/camera.gd" type="Script" id=2]
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=3]
 [ext_resource path="res://HUD/Minimap/Minimap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HUD/Resources/Resources.tscn" type="PackedScene" id=5]
-
-[sub_resource type="OpenSimplexNoise" id=1]
-seed = 9715418
-octaves = 6
-persistence = 1.0
-
-[sub_resource type="NoiseTexture" id=2]
-width = 1920
-height = 1080
-noise = SubResource( 1 )
-
-[sub_resource type="LargeTexture" id=3]
+[ext_resource path="res://Map/Map.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HUD/Scripts/control.gd" type="Script" id=7]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -29,13 +19,11 @@ script = ExtResource( 2 )
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Background" type="Sprite" parent="World"]
-texture = SubResource( 2 )
-normal_map = SubResource( 3 )
-
-[node name="Map" type="Node2D" parent="World"]
-
 [node name="Players" type="Node2D" parent="World"]
+
+[node name="Map" parent="World" instance=ExtResource( 6 )]
+
+[node name="ParallaxBackground" parent="World" instance=ExtResource( 3 )]
 
 [node name="Form" type="Node2D" parent="."]
 position = Vector2( -500, -280 )
@@ -53,23 +41,6 @@ margin_left = 45.0
 margin_right = 145.0
 margin_bottom = 15.0
 
-[node name="ColorLabel" type="Label" parent="Form"]
-margin_top = 25.0
-margin_right = 40.0
-margin_bottom = 45.0
-text = "Color"
-align = 1
-valign = 1
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Form"]
-margin_left = 45.0
-margin_top = 25.0
-margin_right = 85.0
-margin_bottom = 45.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Create" type="Button" parent="Form"]
 margin_top = 55.0
 margin_right = 55.0
@@ -84,7 +55,6 @@ margin_bottom = 75.0
 text = "Join"
 
 [node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource( 3 )
 
 [node name="Control" type="Control" parent="HUD"]
 visible = false
@@ -95,12 +65,12 @@ margin_top = 6.48605
 margin_right = 3.24304
 margin_bottom = 6.48608
 mouse_filter = 2
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Minimap" parent="HUD/Control" instance=ExtResource( 4 )]
-visible = true
 anchor_left = 1.0
 anchor_top = 1.0
 margin_left = -300.0

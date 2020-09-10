@@ -33,7 +33,7 @@ func _update_minimap():
 		markers[item] = new_marker
 
 func _process(_delta):
-	if is_visible():
+	if is_visible() and is_instance_valid(main_object):
 		for item in markers:
 			if is_instance_valid(item):
 				var obj_pos = (item.get_global_position() - main_object.position) * grid_scale + grid.rect_size / 2

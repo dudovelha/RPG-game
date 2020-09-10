@@ -31,7 +31,7 @@ func handle_input():
 	if Input.is_action_just_pressed("ui_cancel"):
 		if owner.is_network_master():
 			rpc("delete_skill")
-		emit_signal("finished", "previous", {})
+			emit_signal("finished", "previous", {})
 
 func fire_event():
 	if is_network_master():

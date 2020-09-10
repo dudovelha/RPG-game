@@ -1,6 +1,10 @@
 extends CanvasLayer
 
+var animation_finished: = false
+var particles_finished: = false
+
 func _ready():
+	set_process(false)
 	reset_force()
 
 func play(radius: float):
@@ -10,6 +14,7 @@ func play(radius: float):
 	$AnimationPlayer.play("shockwave")
 	$Particles2D.position = get_parent().get_global_transform_with_canvas().get_origin()
 	$Particles2D.set_emitting(true)
+	set_process(true)
 
 func set_custom_shader_parameters(force: float):
 	var material = $Shader.get_material()
@@ -26,6 +31,10 @@ func reset_force():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	reset_force()
-	while $Particles2D.is_emitting() and not get_parent().done : yield(get_tree().create_timer(0.5), "timeout")
-	get_parent().queue_free()
+	animation_finished = true
 
+func _process(delta):
+	if animation_finished and particles_finished and get_parent().done:
+		get_parent().delete_skill()
+	if not $Particles2D.is_emitting():
+		particles_finished = true

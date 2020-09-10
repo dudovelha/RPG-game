@@ -12,6 +12,7 @@ func update_UI(player):
 		update_HUD_nodes(player)
 	else:
 		add_resources_node(player)
+	player.connect("death", $"/root/Main/World/Map", "player_died")
 
 func add_resources_node(new_player: KinematicBody2D):
 		var resources = load("res://HUD/Resources/Resources.tscn").instance()
@@ -34,3 +35,5 @@ func update_HUD_nodes(new_player: KinematicBody2D):
 	minimap.set_main_object(new_player)
 	new_player.connect("update_resources", resources, "update_resources")
 	new_player.emit_signal("update_resources", new_player.life, new_player.mana)
+	new_player.connect("death", camera, "current_player_died")
+	new_player.connect("death", HUD, "disable_HUD")

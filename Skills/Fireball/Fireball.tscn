@@ -68,7 +68,7 @@ shader_param/thickness = 0.05
 
 [sub_resource type="Animation" id=10]
 resource_name = "shockwave"
-length = 0.2
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Shader:material:shader_param/size")
 tracks/0/interp = 1
@@ -76,7 +76,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 0.3 ]
@@ -141,7 +141,7 @@ position = Vector2( 3.00494, 11.5905 )
 texture = ExtResource( 4 )
 texture_scale = 10.0
 color = Color( 1, 0.329412, 0, 1 )
-energy = 0.5
+energy = 0.7
 shadow_enabled = true
 
 [node name="LighDimmer" type="Timer" parent="."]
